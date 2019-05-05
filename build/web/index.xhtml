@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<!--    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <p:spinner />
+            <h:outputText value="UserName"></h:outputText>
+            <h:inputText id="userName" value="#{myModel.userName}"></h:inputText><br />
+            <h:outputText value="Password"></h:outputText>
+            <h:inputSecret id="password" value="#{myModel.password}"></h:inputSecret><br />
+            <h:commandButton value="Submit" action="#{myModel.displayName()}"></h:commandButton> <br/>
+            <h:outputText value="#{myModel.userName}"></h:outputText>
+        </h:form>
+        <br />
+        <h:link outcome="welcomePrimefaces" value="Primefaces welcome page" />
+    </h:body>-->
+<script type="text/javascript">
+    function handleLoginRequest(xhr, status, args) {
+        if(args.validationFailed || !args.loggedIn) {
+            PF('dlg').jq.effect("shake", {times:5}, 100);
+        }
+        else {
+            PF('dlg').hide();
+            $('#loginLink').fadeOut();
+        }
+    }
+</script>
+ 
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+
+<h:form>        
+    <h:outputLink value="javascript:void(0)" onclick="PF('dlg').show();" title="login">
+        <p:graphicImage name="/demo/images/login.png" />
+    </h:outputLink>
+     
+    <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+     
+    <p:dialog header="Login" widgetVar="dlg" resizable="false">
+        <h:panelGrid columns="2" cellpadding="5">
+            <h:outputLabel for="username" value="Username:" />
+            <p:inputText id="username" value="#{myModel.userName}" required="true" label="username" />
+             
+            <h:outputLabel for="password" value="Password:" />
+            <p:password id="password" value="#{myModel.password}" required="true" label="password" />
+             
+<!--            <f:facet name="footer">-->
+<p:commandButton value="Login" update="growl" action="#{myModel.login()}"
+                                 oncomplete="handleLoginRequest(xhr, status, args)" />
+<!--            </f:facet>  -->
+        </h:panelGrid>
+    </p:dialog>    
+</h:form>  
+        </h:body>
+</html>
+
